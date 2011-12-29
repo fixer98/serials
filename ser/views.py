@@ -27,9 +27,4 @@ def index(request):
 
 def personal(request, ser):
     post_list = Post.objects.all().filter(url=ser)
-    return render_to_response('index.html', {'post': post_list}, context_instance=RequestContext(request))
-
-def rating_imdb(id):
-    url = 'http://www.imdbapi.com/?i=%s&r=json' % id
-    data  = simplejson.loads(urllib2.urlopen(url).read())
-    print data['Rating']
+    return render_to_response('personal.html', {'post': post_list})
