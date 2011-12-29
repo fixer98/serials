@@ -5,7 +5,7 @@ class Post(models.Model):
     name_ru = models.CharField(max_length=25)
     name_en = models.CharField(max_length=25)
     description = models.TextField(max_length=1000)
-    seasons = models.CharField(max_length=40) #int
+    seasons = models.IntegerField(max_length=40) #int
     translate = models.CharField(max_length=50) #Novafilm;Lostfilm;NewStudios
     imdb = models.CharField(max_length=100) #ratio
     kinopoisk = models.CharField(max_length=100) #ratio
