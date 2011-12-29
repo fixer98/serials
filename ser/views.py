@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from ser.models import Post, PostForm
+import urllib2, re
+from django.utils import simplejson
 
 def index(request):
     if request.method == 'POST':
@@ -22,5 +24,15 @@ def index(request):
         form = PostForm()
     post_list = Post.objects.all().order_by('-date')
     return render_to_response('index.html', {'post': post_list, 'form': form,}, context_instance=RequestContext(request))
-#def personal():
-    #return render_to_response()
+def ratio_kinopoisk(name):
+    url = 'http://www.kinopoisk.ru/search/chrometoolbar.php?query=%s' % name
+    sock = urllib2.urlopen(url)
+    data = sock.read()
+    sock.close()
+    ratio = re.findall('<a href="rating:(.+?)', data, re.DOTALL)
+    return ratio[0]
+def ratio_imdb(id):
+    url = 'http://www.imdbapi.com/?i=%s&r=json' % id
+    feed  = simplejson.loads(urllib2.urlopen(url).read())
+    return feed['Rating']
+
