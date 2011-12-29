@@ -22,3 +22,5 @@ def index(request):
         form = PostForm()
     post_list = Post.objects.all().order_by('-date')
     return render_to_response('index.html', {'post': post_list, 'form': form,}, context_instance=RequestContext(request))
+#def personal():
+    #return render_to_response()
