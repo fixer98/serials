@@ -17,22 +17,19 @@ def index(request):
             translate = form.cleaned_data['translate']
             imdb = form.cleaned_data['imdb']
             kinopoisk = form.cleaned_data['kinopoisk']
-            p = Post(name_ru = name_ru, name_en = name_en, description = description, seasons = seasons, translate = translate, imdb = imdb, kinoopoisk = kinopoisk)
-            p.save()
+            #p = Post(name_ru = name_ru, name_en = name_en, description = description, seasons = seasons, translate = translate, imdb = imdb, kinoopoisk = kinopoisk)
+            #p.save()
             return HttpResponseRedirect('')
     else:
         form = PostForm()
     post_list = Post.objects.all().order_by('-date')
     return render_to_response('index.html', {'post': post_list, 'form': form,}, context_instance=RequestContext(request))
-def ratio_kinopoisk(name):
-    url = 'http://www.kinopoisk.ru/search/chrometoolbar.php?query=%s' % name
-    sock = urllib2.urlopen(url)
-    data = sock.read()
-    sock.close()
-    ratio = re.findall('<a href="rating:(.+?)', data, re.DOTALL)
-    return ratio[0]
-def ratio_imdb(id):
-    url = 'http://www.imdbapi.com/?i=%s&r=json' % id
-    feed  = simplejson.loads(urllib2.urlopen(url).read())
-    return feed['Rating']
 
+def personal(request, ser):
+    post_list = Post.objects.all().filter(url=ser)
+    return render_to_response('index.html', {'post': post_list}, context_instance=RequestContext(request))
+
+def rating_imdb(id):
+    url = 'http://www.imdbapi.com/?i=%s&r=json' % id
+    data  = simplejson.loads(urllib2.urlopen(url).read())
+    print data['Rating']

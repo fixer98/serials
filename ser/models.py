@@ -7,9 +7,10 @@ class Post(models.Model):
     description = models.TextField(max_length=1000)
     seasons = models.CharField(max_length=40) #int
     translate = models.CharField(max_length=50) #Novafilm;Lostfilm;NewStudios
-    imdb = models.CharField(max_length=100) #imbd id
-    kinopoisk = models.CharField(max_length=100) #API serial name
+    imdb = models.CharField(max_length=100) #ratio
+    kinopoisk = models.CharField(max_length=100) #ratio
     img = models.CharField(max_length=100) #url
+    url = models.CharField(max_length=20)
     date = models.DateField(auto_now_add=True)
 
 class PostForm(forms.Form):
@@ -21,3 +22,4 @@ class PostForm(forms.Form):
     kinopoisk = models.CharField(max_length=100)
     translate = models.CharField(max_length=50)
     img = models.CharField(max_length=100)
+
